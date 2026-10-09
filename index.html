@@ -1,21 +1,331 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Bookkeeping Services USA | Virtual Bookkeeper | KVD Outsourcing</title>
+  <title>Bookkeeping Services USA | Virtual Bookkeeper | KVD Outsourcing</title>
+  <meta name="description" content="Professional bookkeeping services in USA. Virtual bookkeeping, payroll, QuickBooks and tax preparation support for small businesses." />
 
-    <meta name="description" content="Professional bookkeeping services in USA. Virtual bookkeeping, payroll, QuickBooks and tax preparation support for small businesses.">
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --kvd-blue: #2b4b68;
+      --kvd-gray: #4f5d73;
+      --kvd-green: #15803d;
+    }
 
-    <style>
-        :root {
-            --kvd-blue: #2b4b68;
-            --kvd-gray: #4f5d73;
-        }
-    </style>
+    /* Bookkeeping dashboard */
+    .kvd-dashboard {
+      background: #f4f7fa;
+      padding: 64px 20px;
+      color: #26384a;
+    }
+
+    .kvd-dashboard-inner {
+      max-width: 1080px;
+      margin: auto;
+    }
+
+    .kvd-dashboard-heading {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .kvd-dashboard-heading h2 {
+      color: var(--kvd-blue);
+      font-size: clamp(25px, 3vw, 34px);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .kvd-dashboard-heading p {
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .kvd-dashboard-panel {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 12px 35px rgba(43, 75, 104, 0.07);
+      animation: kvdFadeIn 0.8s ease-out both;
+    }
+
+    .kvd-dashboard-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .kvd-dashboard-top h3 {
+      color: var(--kvd-blue);
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .kvd-demo-label {
+      background: #edf4fa;
+      color: var(--kvd-blue);
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .kvd-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .kvd-kpi-card {
+      padding: 20px;
+      border: 1px solid #e5ebf1;
+      border-radius: 13px;
+      background: #fff;
+      animation: kvdFadeIn 0.7s ease-out both;
+    }
+
+    .kvd-kpi-card:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    .kvd-kpi-card:nth-child(3) {
+      animation-delay: 0.24s;
+    }
+
+    .kvd-kpi-label {
+      display: block;
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .kvd-kpi-value {
+      display: block;
+      color: var(--kvd-blue);
+      font-size: clamp(23px, 3vw, 30px);
+      font-weight: 700;
+    }
+
+    .kvd-kpi-note {
+      display: block;
+      color: var(--kvd-green);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .kvd-dashboard-lower {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .kvd-chart-card,
+    .kvd-activity-card {
+      border: 1px solid #e5ebf1;
+      border-radius: 13px;
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .kvd-chart-card h4,
+    .kvd-activity-card h4 {
+      color: var(--kvd-blue);
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 20px;
+    }
+
+    .kvd-chart {
+      height: 175px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 12px;
+      padding: 0 8px;
+      border-bottom: 1px solid #dbe3ec;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 42px,
+        #edf1f5 43px
+      );
+    }
+
+    .kvd-chart-column {
+      height: 100%;
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .kvd-chart-bar {
+      width: min(100%, 34px);
+      height: var(--bar-height);
+      background: #9bb5ca;
+      border-radius: 6px 6px 0 0;
+      transform-origin: bottom;
+      animation: kvdBarRise 0.9s ease-out both;
+    }
+
+    .kvd-chart-column:nth-child(2) .kvd-chart-bar {
+      animation-delay: 0.08s;
+    }
+
+    .kvd-chart-column:nth-child(3) .kvd-chart-bar {
+      animation-delay: 0.16s;
+    }
+
+    .kvd-chart-column:nth-child(4) .kvd-chart-bar {
+      animation-delay: 0.24s;
+    }
+
+    .kvd-chart-column:nth-child(5) .kvd-chart-bar {
+      animation-delay: 0.32s;
+    }
+
+    .kvd-chart-column:nth-child(6) .kvd-chart-bar {
+      animation-delay: 0.4s;
+    }
+
+    .kvd-chart-label {
+      color: #64748b;
+      font-size: 11px;
+      padding-bottom: 9px;
+    }
+
+    .kvd-activity-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 0;
+      border-bottom: 1px solid #edf1f5;
+    }
+
+    .kvd-activity-row:last-child {
+      border-bottom: none;
+    }
+
+    .kvd-status-dot {
+      width: 9px;
+      height: 9px;
+      flex-shrink: 0;
+      background: #16a34a;
+      border-radius: 50%;
+      animation: kvdStatusPulse 2.5s ease-in-out infinite;
+    }
+
+    .kvd-activity-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .kvd-activity-text strong {
+      display: block;
+      color: #334155;
+      font-size: 13px;
+    }
+
+    .kvd-activity-text span {
+      display: block;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    .kvd-status-tag {
+      color: #15803d;
+      background: #ecfdf3;
+      padding: 5px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .kvd-dashboard-note {
+      margin: 18px 0 0;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    @keyframes kvdFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes kvdBarRise {
+      from { transform: scaleY(0.08); }
+      to { transform: scaleY(1); }
+    }
+
+    @keyframes kvdStatusPulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.18);
+      }
+      50% {
+        box-shadow: 0 0 0 5px rgba(22, 163, 74, 0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .kvd-dashboard {
+        padding: 44px 14px;
+      }
+
+      .kvd-dashboard-panel {
+        padding: 16px;
+      }
+
+      .kvd-kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .kvd-kpi-card {
+        padding: 16px;
+      }
+
+      .kvd-dashboard-lower {
+        grid-template-columns: 1fr;
+      }
+
+      .kvd-chart {
+        gap: 7px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .kvd-dashboard *,
+      .kvd-dashboard *::before,
+      .kvd-dashboard *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
 
 <body class="font-sans text-gray-800">
@@ -24,8 +334,11 @@
   <header class="bg-white shadow py-4 px-6 flex items-center justify-between">
     <div class="flex items-center space-x-3">
       <img src="logo.png" alt="KVD Outsourcing Logo" class="h-10 w-auto" />
-      <span class="text-xl font-bold text-[color:var(--kvd-blue)]">KVD Outsourcing</span>
+      <span class="text-xl font-bold text-[color:var(--kvd-blue)]">
+        KVD Outsourcing
+      </span>
     </div>
+
     <nav class="hidden md:flex space-x-6 text-[color:var(--kvd-blue)] font-medium">
       <a href="#about" class="hover:text-gray-600">About</a>
       <a href="#services" class="hover:text-gray-600">Services</a>
@@ -34,194 +347,327 @@
     </nav>
   </header>
 
-<!-- Hero Section -->
-<section class="bg-[color:var(--kvd-blue)] text-white py-20 text-center">
-  <h1 class="text-4xl font-bold mb-4">
-    Simplify Your Finances with KVD Outsourcing
-  </h1>
+  <!-- Hero Section -->
+  <section class="bg-[color:var(--kvd-blue)] text-white py-20 text-center px-6">
+    <h1 class="text-4xl font-bold mb-4">
+      Simplify Your Finances with KVD Outsourcing
+    </h1>
 
-  <p class="text-lg mb-6">
-    Accurate, reliable, and affordable bookkeeping for small businesses, startups, and freelancers.
-  </p>
+    <p class="text-lg mb-6">
+      Accurate, reliable, and affordable bookkeeping for small businesses,
+      startups, and freelancers.
+    </p>
 
-  <a href="https://wa.me/919649528033?text=Hello%20I%20am%20interested%20in%20bookkeeping%20services."
-     target="_blank"
-     class="bg-white text-[color:var(--kvd-blue)] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100">
-    Get a Free Quote
-  </a>
-</section>
+    <a href="https://wa.me/919649528033?text=Hello%20I%20am%20interested%20in%20bookkeeping%20services."
+       target="_blank"
+       rel="noopener noreferrer"
+       class="inline-block bg-white text-[color:var(--kvd-blue)] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100">
+      Get a Free Quote
+    </a>
+  </section>
+
+  <!-- Animated Bookkeeping Dashboard -->
+  <section class="kvd-dashboard" aria-labelledby="kvd-dashboard-title">
+    <div class="kvd-dashboard-inner">
+
+      <div class="kvd-dashboard-heading">
+        <h2 id="kvd-dashboard-title">
+          Your Books. Clearer. Smarter. Organized.
+        </h2>
+        <p>
+          Professional bookkeeping for better financial visibility.
+        </p>
+      </div>
+
+      <div class="kvd-dashboard-panel">
+
+        <div class="kvd-dashboard-top">
+          <h3>Bookkeeping Overview</h3>
+          <span class="kvd-demo-label">SAMPLE DASHBOARD</span>
+        </div>
+
+        <!-- Financial Summary -->
+        <div class="kvd-kpi-grid">
+
+          <div class="kvd-kpi-card">
+            <span class="kvd-kpi-label">Monthly Revenue</span>
+            <strong class="kvd-kpi-value">$24,800</strong>
+            <span class="kvd-kpi-note">Illustrative figure</span>
+          </div>
+
+          <div class="kvd-kpi-card">
+            <span class="kvd-kpi-label">Monthly Expenses</span>
+            <strong class="kvd-kpi-value">$15,250</strong>
+            <span class="kvd-kpi-note">Illustrative figure</span>
+          </div>
+
+          <div class="kvd-kpi-card">
+            <span class="kvd-kpi-label">Net Income</span>
+            <strong class="kvd-kpi-value">$9,550</strong>
+            <span class="kvd-kpi-note">Revenue less expenses</span>
+          </div>
+
+        </div>
+
+        <div class="kvd-dashboard-lower">
+
+          <!-- Revenue Chart -->
+          <div class="kvd-chart-card">
+            <h4>Monthly Revenue Trend</h4>
+
+            <div class="kvd-chart"
+                 role="img"
+                 aria-label="Illustrative revenue trend from January through June">
+
+              <div class="kvd-chart-column">
+                <div class="kvd-chart-bar" style="--bar-height:42%"></div>
+                <span class="kvd-chart-label">Jan</span>
+              </div>
+
+              <div class="kvd-chart-column">
+                <div class="kvd-chart-bar" style="--bar-height:56%"></div>
+                <span class="kvd-chart-label">Feb</span>
+              </div>
+
+              <div class="kvd-chart-column">
+                <div class="kvd-chart-bar" style="--bar-height:48%"></div>
+                <span class="kvd-chart-label">Mar</span>
+              </div>
+
+              <div class="kvd-chart-column">
+                <div class="kvd-chart-bar" style="--bar-height:68%"></div>
+                <span class="kvd-chart-label">Apr</span>
+              </div>
+
+              <div class="kvd-chart-column">
+                <div class="kvd-chart-bar" style="--bar-height:78%"></div>
+                <span class="kvd-chart-label">May</span>
+              </div>
+
+              <div class="kvd-chart-column">
+                <div class="kvd-chart-bar" style="--bar-height:92%"></div>
+                <span class="kvd-chart-label">Jun</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Bookkeeping Workflow -->
+          <div class="kvd-activity-card">
+            <h4>Bookkeeping Workflow</h4>
+
+            <div class="kvd-activity-row">
+              <span class="kvd-status-dot"></span>
+              <div class="kvd-activity-text">
+                <strong>Transaction Categorization</strong>
+                <span>Sales and expenses organized</span>
+              </div>
+              <span class="kvd-status-tag">Example</span>
+            </div>
+
+            <div class="kvd-activity-row">
+              <span class="kvd-status-dot"></span>
+              <div class="kvd-activity-text">
+                <strong>Bank Reconciliation</strong>
+                <span>Bank activity matched to records</span>
+              </div>
+              <span class="kvd-status-tag">Example</span>
+            </div>
+
+            <div class="kvd-activity-row">
+              <span class="kvd-status-dot"></span>
+              <div class="kvd-activity-text">
+                <strong>Financial Reporting</strong>
+                <span>Profit and loss and balance sheet</span>
+              </div>
+              <span class="kvd-status-tag">Example</span>
+            </div>
+
+          </div>
+        </div>
+
+        <p class="kvd-dashboard-note">
+          Illustrative data only. This dashboard is not connected to
+          QuickBooks, Xero, or a live accounting system.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
   <!-- About Section -->
   <section id="about" class="py-16 px-6 md:px-20 text-center bg-gray-50">
-    <h2 class="text-3xl font-bold mb-6 text-[color:var(--kvd-blue)]">About Us</h2>
+    <h2 class="text-3xl font-bold mb-6 text-[color:var(--kvd-blue)]">
+      About Us
+    </h2>
+
     <p class="max-w-2xl mx-auto text-lg leading-relaxed text-gray-700">
-      At <strong>KVD Outsourcing</strong>, KVD Outsourcing actively provides Accounting and Bookkeeping services, including Payroll Services in Usa and tax preparation, across all major countries of the world to a wide variety of clients. 
-      We consistently maintain high-quality standards for each work order and ensure that our services meet the needs of businesses of all sizes. 
-      Our experienced team of professionals helps clients reduce operational costs while offering the best support and consultancy, along with our core services.
+      At <strong>KVD Outsourcing</strong>, we provide accounting and bookkeeping
+      services, including payroll support and tax preparation assistance for
+      businesses. We maintain high-quality standards and help businesses
+      organize their financial records, reduce administrative workload, and
+      make informed financial decisions.
     </p>
   </section>
 
   <!-- Services Section -->
   <section id="services" class="py-16 px-6 md:px-20">
-    <h2 class="text-3xl font-bold text-center mb-10 text-[color:var(--kvd-blue)]">Our Services</h2>
+    <h2 class="text-3xl font-bold text-center mb-10 text-[color:var(--kvd-blue)]">
+      Our Services
+    </h2>
+
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
       <div class="bg-white shadow-lg rounded-2xl p-6 border-t-4 border-[color:var(--kvd-blue)]">
         <h3 class="font-semibold text-xl mb-2">Monthly Bookkeeping</h3>
-        <p>We record and categorize all business transactions, including sales, expenses, deposits, withdrawals, and journal entries. Every transaction is properly classified to maintain clean and compliant books.</p>
+        <p>We record and categorize business transactions, sales, expenses, deposits, withdrawals, and journal entries to maintain organized financial records.</p>
       </div>
+
       <div class="bg-white shadow-lg rounded-2xl p-6 border-t-4 border-[color:var(--kvd-blue)]">
-        <h3 class="font-semibold text-xl mb-2">Accounts Payable & Receivable</h3>
-        <p>We track vendor bills, customer invoices, and outstanding balances to help you manage cash flow effectively. This ensures timely payments, reduced late fees, and better financial control.</p>
+        <h3 class="font-semibold text-xl mb-2">Accounts Payable &amp; Receivable</h3>
+        <p>We track vendor bills, customer invoices, and outstanding balances to support effective cash flow management and timely payments.</p>
       </div>
+
       <div class="bg-white shadow-lg rounded-2xl p-6 border-t-4 border-[color:var(--kvd-blue)]">
-        <h3 class="font-semibold text-xl mb-2">Bank & Credit Card Reconciliation</h3>
-        <p>We reconcile all bank and credit card accounts monthly to ensure balances match your financial records. This helps identify discrepancies, prevent errors, and detect potential fraud.</p>
+        <h3 class="font-semibold text-xl mb-2">Bank &amp; Credit Card Reconciliation</h3>
+        <p>We reconcile bank and credit card accounts to help identify discrepancies and maintain accurate financial records.</p>
       </div>
+
       <div class="bg-white shadow-lg rounded-2xl p-6 border-t-4 border-[color:var(--kvd-blue)]">
         <h3 class="font-semibold text-xl mb-2">Payroll Processing</h3>
-        <p>We manage payroll entries, employee payments, and ensure accurate reporting. We help maintain compliance with applicable regulations and proper documentation.</p>
+        <p>We assist with payroll entries, payment records, and payroll reporting, with attention to documentation and applicable requirements.</p>
       </div>
+
       <div class="bg-white shadow-lg rounded-2xl p-6 border-t-4 border-[color:var(--kvd-blue)]">
         <h3 class="font-semibold text-xl mb-2">Financial Statements</h3>
-        <p>Monthly or quarterly P&L, Balance Sheet, and Cash Flow reports.</p>
+        <p>Monthly or quarterly profit and loss statements, balance sheets, and cash flow reports.</p>
       </div>
+
       <div class="bg-white shadow-lg rounded-2xl p-6 border-t-4 border-[color:var(--kvd-blue)]">
         <h3 class="font-semibold text-xl mb-2">Tax-Ready Reports</h3>
-        <p>Your books are maintained in a tax-ready format, making it easy for your CPA or tax preparer to file year-end returns accurately and efficiently.</p>
+        <p>Organized financial records that help your CPA or tax preparer complete year-end tax preparation.</p>
       </div>
+
     </div>
   </section>
 
   <!-- Why Choose Us -->
   <section class="bg-blue-50 py-16 px-6 md:px-20 text-center">
-    <h2 class="text-3xl font-bold mb-10 text-[color:var(--kvd-blue)]">Why Choose KVD</h2>
+    <h2 class="text-3xl font-bold mb-10 text-[color:var(--kvd-blue)]">
+      Why Choose KVD
+    </h2>
+
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <div class="p-6 bg-white shadow rounded-xl">📊 QuickBooks & Xero Certified</div>
-      <div class="p-6 bg-white shadow rounded-xl">💼 100% Confidential & Secure</div>
-      <div class="p-6 bg-white shadow rounded-xl">💬 Fast, Clear Communication</div>
-      <div class="p-6 bg-white shadow rounded-xl">🕒 Timely Reports & Support</div>
-      <div class="p-6 bg-white shadow rounded-xl">💰 Transparent, Fixed Pricing</div>
+      <div class="p-6 bg-white shadow rounded-xl">QuickBooks &amp; Xero Support</div>
+      <div class="p-6 bg-white shadow rounded-xl">Confidentiality-Focused Service</div>
+      <div class="p-6 bg-white shadow rounded-xl">Clear Communication</div>
+      <div class="p-6 bg-white shadow rounded-xl">Timely Reports &amp; Support</div>
+      <div class="p-6 bg-white shadow rounded-xl">Transparent Pricing</div>
     </div>
   </section>
 
   <!-- Pricing -->
   <section id="pricing" class="py-16 px-6 md:px-20">
-    <h2 class="text-3xl font-bold text-center mb-10 text-[color:var(--kvd-blue)]">Our Pricing</h2>
+    <h2 class="text-3xl font-bold text-center mb-10 text-[color:var(--kvd-blue)]">
+      Our Pricing
+    </h2>
+
     <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
       <div class="border rounded-2xl p-8 text-center shadow hover:shadow-lg">
         <h3 class="text-2xl font-semibold mb-4">Starter Plan</h3>
         <p class="text-4xl font-bold mb-4">$50<span class="text-lg font-normal">/month</span></p>
-        <p class="mb-6">For freelancers & solo owners</p>
-        <a href="#contact" class="bg-[color:var(--kvd-blue)] text-white px-6 py-3 rounded-lg">Get Started</a>
+        <p class="mb-6">For freelancers &amp; solo owners</p>
+        <a href="#contact" class="inline-block bg-[color:var(--kvd-blue)] text-white px-6 py-3 rounded-lg">Get Started</a>
       </div>
+
       <div class="border-2 border-[color:var(--kvd-blue)] rounded-2xl p-8 text-center shadow-lg">
         <h3 class="text-2xl font-semibold mb-4 text-[color:var(--kvd-blue)]">Growth Plan</h3>
         <p class="text-4xl font-bold mb-4 text-[color:var(--kvd-blue)]">$100<span class="text-lg font-normal">/month</span></p>
-        <p class="mb-6">For small & growing businesses</p>
-        <a href="#contact" class="bg-[color:var(--kvd-blue)] text-white px-6 py-3 rounded-lg">Get Started</a>
+        <p class="mb-6">For small &amp; growing businesses</p>
+        <a href="#contact" class="inline-block bg-[color:var(--kvd-blue)] text-white px-6 py-3 rounded-lg">Get Started</a>
       </div>
+
       <div class="border rounded-2xl p-8 text-center shadow hover:shadow-lg">
         <h3 class="text-2xl font-semibold mb-4">Custom Plan</h3>
         <p class="text-4xl font-bold mb-4">$6.00 Hourly</p>
         <p class="mb-6">For complex or large businesses</p>
-        <a href="#contact" class="bg-[color:var(--kvd-blue)] text-white px-6 py-3 rounded-lg">Contact Us</a>
+        <a href="#contact" class="inline-block bg-[color:var(--kvd-blue)] text-white px-6 py-3 rounded-lg">Contact Us</a>
       </div>
+
     </div>
   </section>
 
-
   <!-- Testimonials -->
   <section class="bg-gray-50 py-16 px-6 md:px-20 text-center">
-    <h2 class="text-3xl font-bold mb-10 text-[color:var(--kvd-blue)]">What Our Clients Say</h2>
+    <h2 class="text-3xl font-bold mb-10 text-[color:var(--kvd-blue)]">
+      What Our Clients Say
+    </h2>
+
     <div class="max-w-3xl mx-auto space-y-8">
       <blockquote class="bg-white p-6 rounded-2xl shadow">
         “KVD Outsourcing helped us streamline our bookkeeping and stay audit-ready!”
-        <br><span class="font-semibold">— Sarah P., Startup Owner</span>
+        <br /><span class="font-semibold">— Sarah P., Startup Owner</span>
       </blockquote>
+
       <blockquote class="bg-white p-6 rounded-2xl shadow">
         “Professional, accurate, and always on time — we highly recommend KVD.”
-        <br><span class="font-semibold">— David L., Retail Business</span>
+        <br /><span class="font-semibold">— David L., Retail Business</span>
       </blockquote>
     </div>
   </section>
 
   <!-- Software Section -->
-<section class="py-16 px-6 md:px-20 bg-gray-50 text-center">
-  <h2 class="text-3xl font-bold mb-6 text-[color:var(--kvd-blue)]">
-    Softwares We Use for Accounting, Bookkeeping & Other Value Added Services
-  </h2>
+  <section class="py-16 px-6 md:px-20 bg-gray-50 text-center">
+    <h2 class="text-3xl font-bold mb-6 text-[color:var(--kvd-blue)]">
+      Software We Use for Accounting &amp; Bookkeeping
+    </h2>
 
-  <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center mt-10">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center mt-10">
+      <img src="quickbooks.png" alt="QuickBooks" loading="lazy" class="h-16 mx-auto object-contain" />
+      <img src="xero.png" alt="Xero" loading="lazy" class="h-16 mx-auto object-contain" />
+      <img src="zoho.png" alt="Zoho Books" loading="lazy" class="h-16 mx-auto object-contain" />
+      <img src="wave.png" alt="Wave Accounting" loading="lazy" class="h-16 mx-auto object-contain" />
+      <img src="tally.png" alt="Tally" loading="lazy" class="h-16 mx-auto object-contain" />
+      <img src="ADP.png" alt="ADP" loading="lazy" class="h-16 mx-auto object-contain" />
+      <img src="Netsuite.png" alt="NetSuite" loading="lazy" class="h-16 mx-auto object-contain" />
+      <img src="Gusto.png" alt="Gusto" loading="lazy" class="h-16 mx-auto object-contain" />
+    </div>
+  </section>
 
-    <img src="quickbooks.png" alt="QuickBooks" class="h-16 mx-auto" />
-    <img src="xero.png" alt="Xero" class="h-16 mx-auto" />
-    <img src="zoho.png" alt="Zoho Books" class="h-16 mx-auto" />
-    <img src="wave.png" alt="Wave Accounting" class="h-16 mx-auto" />
-    <img src="tally.png" alt="Tally" class="h-16 mx-auto" />
-    <img src="ADP.png" alt="ADP" class="h-16 mx-auto" />
-    <img src="Netsuite.png" alt="Netsuite" class="h-16 mx-auto" />
-    <img src="Gusto.png" alt="Gusto" class="h-16 mx-auto" />
-    
+  <!-- Contact Section -->
+  <section id="contact" class="py-12 px-6 text-center">
+    <h2 class="text-3xl font-bold mb-6 text-[color:var(--kvd-blue)]">
+      Contact KVD Outsourcing
+    </h2>
 
-  </div>
-</section>
+    <p class="text-lg font-semibold">
+      Email:
+      <a href="mailto:chelaniriya1@gmail.com" class="text-blue-600 hover:underline">
+        chelaniriya1@gmail.com
+      </a>
+    </p>
 
-<!-- Contact Info -->
-<div class="mt-12 text-center">
+    <p class="text-lg mt-3">
+      WhatsApp:
+      <a href="https://wa.me/919649528033"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="text-green-600 hover:underline">
+        Chat with Us
+      </a>
+    </p>
 
-  <p class="text-lg font-semibold">
-    📧 
-    <a href="mailto:chelaniriya1@gmail.com" class="text-blue-600 hover:underline">
-      chelaniriya1@gmail.com
-    </a>
-  </p>
-
-  <!-- WhatsApp -->
-  <p class="text-lg mt-2">
-    📱 
-    <a href="https://wa.me/919649528033" target="_blank" 
-       class="text-green-600 hover:underline">
-       Chat on WhatsApp
-    </a>
-  </p>
-
-</div>
- <p style="text-align:center; font-size:20px; margin-top:20px; font-weight:500;">
-  🌍 Available Globally – Remote & On-Site Options
-</p>
-</div>
+    <p class="text-center text-lg mt-6 font-medium">
+      Available Globally – Remote &amp; On-Site Options
+    </p>
+  </section>
 
   <!-- Footer -->
   <footer class="bg-gray-900 text-gray-300 text-center py-6 text-sm">
-    <img src="logo.png" alt="KVD Outsourcing Logo" class="h-8 mx-auto mb-2" />
-    © 2025 KVD Outsourcing | All Rights Reserved
+    <img src="logo.png" alt="KVD Outsourcing Logo" loading="lazy" class="h-8 mx-auto mb-2" />
+    © 2026 KVD Outsourcing | All Rights Reserved
   </footer>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
