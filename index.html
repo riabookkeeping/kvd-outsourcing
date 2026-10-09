@@ -28,6 +28,396 @@
       scroll-padding-top: 85px;
     }
 
+<!-- KVD Outsourcing Chat Widget -->
+<style>
+  #kvd-chat-button {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 9999;
+    border: none;
+    border-radius: 50px;
+    background: #2b4b68;
+    color: #fff;
+    padding: 15px 21px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 5px 22px rgba(0, 0, 0, .22);
+    cursor: pointer;
+  }
+
+  #kvd-chat-button:hover {
+    background: #1e374e;
+  }
+
+  #kvd-chat-window {
+    position: fixed;
+    right: 22px;
+    bottom: 88px;
+    width: 350px;
+    max-width: calc(100vw - 28px);
+    height: 460px;
+    max-height: calc(100dvh - 120px);
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #dce4ec;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .2);
+    font-family: Arial, sans-serif;
+  }
+
+  #kvd-chat-window.kvd-chat-open {
+    display: flex;
+  }
+
+  .kvd-chat-header {
+    background: #2b4b68;
+    color: #fff;
+    padding: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .kvd-chat-header strong {
+    display: block;
+    font-size: 16px;
+  }
+
+  .kvd-chat-header small {
+    display: block;
+    color: #e2ebf3;
+    margin-top: 4px;
+  }
+
+  #kvd-chat-close {
+    background: transparent;
+    border: 0;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  #kvd-chat-messages {
+    padding: 15px;
+    flex: 1;
+    overflow-y: auto;
+    background: #f5f8fb;
+  }
+
+  .kvd-chat-message {
+    padding: 10px 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    max-width: 88%;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .kvd-chat-bot {
+    background: #fff;
+    color: #2b3d50;
+    border: 1px solid #e1e8ef;
+    border-top-left-radius: 3px;
+  }
+
+  .kvd-chat-user {
+    margin-left: auto;
+    background: #2b4b68;
+    color: #fff;
+    border-top-right-radius: 3px;
+  }
+
+  .kvd-chat-quick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 12px;
+  }
+
+  .kvd-chat-quick button {
+    background: #fff;
+    border: 1px solid #b9c9d8;
+    color: #2b4b68;
+    padding: 7px 9px;
+    border-radius: 18px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .kvd-chat-form {
+    display: flex;
+    gap: 7px;
+    padding: 11px;
+    border-top: 1px solid #e1e8ef;
+    background: #fff;
+  }
+
+  #kvd-chat-input {
+    min-width: 0;
+    flex: 1;
+    padding: 11px;
+    border: 1px solid #cdd7e1;
+    border-radius: 9px;
+    outline-color: #2b4b68;
+    font-size: 14px;
+  }
+
+  #kvd-chat-send {
+    padding: 0 14px;
+    border: 0;
+    border-radius: 9px;
+    background: #2b4b68;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .kvd-chat-footer {
+    padding: 7px 10px;
+    text-align: center;
+    color: #748397;
+    font-size: 11px;
+    background: #fff;
+  }
+
+  @media (max-width: 480px) {
+    #kvd-chat-button {
+      right: 14px;
+      bottom: 14px;
+    }
+
+    #kvd-chat-window {
+      right: 10px;
+      bottom: 75px;
+      width: calc(100vw - 20px);
+      max-width: none;
+      height: min(470px, calc(100dvh - 95px));
+    }
+  }
+</style>
+
+<button
+  id="kvd-chat-button"
+  type="button"
+  aria-label="Open bookkeeping chat"
+  aria-controls="kvd-chat-window"
+  aria-expanded="false"
+>
+  ✦ AI Chat
+</button>
+
+<section
+  id="kvd-chat-window"
+  role="dialog"
+  aria-label="KVD bookkeeping chat"
+  aria-hidden="true"
+>
+  <div class="kvd-chat-header">
+    <div>
+      <strong>KVD Bookkeeping Assistant</strong>
+      <small>How can we help your business?</small>
+    </div>
+    <button id="kvd-chat-close" type="button" aria-label="Close chat">×</button>
+  </div>
+
+  <div id="kvd-chat-messages" aria-live="polite">
+    <div class="kvd-chat-message kvd-chat-bot">
+      Hello! 👋 Welcome to KVD Outsourcing.
+
+      I can help you learn about our bookkeeping services. What would you like to know?
+    </div>
+
+    <div class="kvd-chat-quick">
+      <button type="button" data-question="services">Our services</button>
+      <button type="button" data-question="pricing">Pricing</button>
+      <button type="button" data-question="software">QuickBooks &amp; Xero</button>
+      <button type="button" data-question="reconciliation">Bank reconciliation</button>
+      <button type="button" data-question="contact">Contact us</button>
+    </div>
+  </div>
+
+  <form id="kvd-chat-form" class="kvd-chat-form">
+    <input
+      id="kvd-chat-input"
+      type="text"
+      placeholder="Ask a bookkeeping question..."
+      aria-label="Your message"
+      maxlength="500"
+      required
+    >
+    <button id="kvd-chat-send" type="submit">Send</button>
+  </form>
+
+  <div class="kvd-chat-footer">
+    Automated sample responses · No live accounting connection
+  </div>
+</section>
+
+<script>
+(function () {
+  const button = document.getElementById("kvd-chat-button");
+  const windowEl = document.getElementById("kvd-chat-window");
+  const closeButton = document.getElementById("kvd-chat-close");
+  const messages = document.getElementById("kvd-chat-messages");
+  const form = document.getElementById("kvd-chat-form");
+  const input = document.getElementById("kvd-chat-input");
+
+  if (!button || !windowEl || !closeButton || !messages || !form || !input) {
+    return;
+  }
+
+  const whatsappUrl =
+    "https://wa.me/919649528033?text=" +
+    encodeURIComponent("Hello, I am interested in KVD bookkeeping services.");
+
+  const answers = {
+    services:
+      "We offer monthly bookkeeping, transaction categorization, bank and credit card reconciliation, accounts payable and receivable, catch-up bookkeeping, cleanup, and financial reporting.",
+
+    pricing:
+      "Our pricing depends on transaction volume, account complexity, and the services required. Contact us for a customized quote.",
+
+    software:
+      "Our website lists QuickBooks Online, Xero, Excel, and Zoho Books as supported tools. Tell us which software you use so we can discuss your requirements.",
+
+    reconciliation:
+      "Bank reconciliation compares your accounting records with your bank statement, helping identify missing transactions, duplicate entries, and discrepancies.",
+
+    contact:
+      "You can contact our team on WhatsApp to discuss your bookkeeping requirements and request a quote."
+  };
+
+  function addMessage(text, type) {
+    const message = document.createElement("div");
+    message.className = "kvd-chat-message " +
+      (type === "user" ? "kvd-chat-user" : "kvd-chat-bot");
+    message.textContent = text;
+    messages.appendChild(message);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function addWhatsAppLink() {
+    const link = document.createElement("a");
+    link.href = whatsappUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Chat with us on WhatsApp";
+    link.style.display = "inline-block";
+    link.style.margin = "2px 0 12px";
+    link.style.padding = "9px 12px";
+    link.style.background = "#e6f5ed";
+    link.style.color = "#176b49";
+    link.style.borderRadius = "8px";
+    link.style.fontSize = "13px";
+    link.style.fontWeight = "700";
+    link.style.textDecoration = "none";
+    messages.appendChild(link);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function getAnswer(text) {
+    const q = text.toLowerCase();
+
+    if (/\b(price|pricing|cost|fee|charge|quote|how much)\b/.test(q)) {
+      return answers.pricing;
+    }
+
+    if (/\b(quickbooks|qbo|xero|zoho|excel|software)\b/.test(q)) {
+      return answers.software;
+    }
+
+    if (/\b(reconcil|bank statement|credit card)\b/.test(q)) {
+      return answers.reconciliation;
+    }
+
+    if (/\b(service|services|bookkeeping|accounts payable|accounts receivable|catch.up|cleanup|clean.up|reports?)\b/.test(q)) {
+      return answers.services;
+    }
+
+    if (/\b(contact|whatsapp|phone|talk|human|person|team)\b/.test(q)) {
+      return answers.contact;
+    }
+
+    return "Thanks for your question! This demo assistant has preset answers and cannot understand every request. Please contact us on WhatsApp for help with your specific bookkeeping needs.";
+  }
+
+  function openChat() {
+    windowEl.classList.add("kvd-chat-open");
+    windowEl.setAttribute("aria-hidden", "false");
+    button.setAttribute("aria-expanded", "true");
+    input.focus();
+  }
+
+  function closeChat() {
+    windowEl.classList.remove("kvd-chat-open");
+    windowEl.setAttribute("aria-hidden", "true");
+    button.setAttribute("aria-expanded", "false");
+    button.focus();
+  }
+
+  function answerQuestion(question) {
+    addMessage(question, "user");
+    addMessage(getAnswer(question), "bot");
+    addWhatsAppLink();
+  }
+
+  button.addEventListener("click", function () {
+    if (windowEl.classList.contains("kvd-chat-open")) {
+      closeChat();
+    } else {
+      openChat();
+    }
+  });
+
+  closeButton.addEventListener("click", closeChat);
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" &&
+        windowEl.classList.contains("kvd-chat-open")) {
+      closeChat();
+    }
+  });
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const question = input.value.trim();
+    if (!question) return;
+
+    answerQuestion(question);
+    input.value = "";
+    input.focus();
+  });
+
+  messages.addEventListener("click", function (event) {
+    const quickButton = event.target.closest("button[data-question]");
+    if (!quickButton) return;
+
+    const topic = quickButton.dataset.question;
+    const labels = {
+      services: "What bookkeeping services do you offer?",
+      pricing: "What is your pricing?",
+      software: "Do you support QuickBooks and Xero?",
+      reconciliation: "What is bank reconciliation?",
+      contact: "How can I contact your team?"
+    };
+
+    if (labels[topic] && answers[topic]) {
+      answerQuestion(labels[topic]);
+    }
+  });
+})();
+</script>
+<!-- End KVD Outsourcing Chat Widget -->
+  
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
